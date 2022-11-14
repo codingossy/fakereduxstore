@@ -1,0 +1,25 @@
+@tailwind base;
+
+
+@layer base {
+  body {
+    @apply  font-primary text-base leading-relaxed;
+  }
+  section {
+    @apply py-[30px] lg:py-[30px];
+  }
+}
+
+
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+  scroll-behavior: smooth;
+}
+
+body{
+  /* background: #000;
+  color: #fff; */
+}
