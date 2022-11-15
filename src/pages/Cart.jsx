@@ -8,7 +8,7 @@ import emptyCart from "../assets/056.png";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CartModal from "../components/main/CartModal";
-import { RemoveFromCart } from "../store/cartSlice";
+import { clearCart, RemoveFromCart } from "../store/cartSlice";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -96,12 +96,22 @@ const Cart = () => {
 
             <h1 className="text-xl ">total price: {totalPrice}</h1>
 
-            <button
-              onClick={() => setShowModal(true)}
-              className="mt-5 rounded-md bg-green-500 px-5 py-3 text-2xl capitalize text-white lg:mt-0"
-            >
-              checkout
-            </button>
+            <div className="flex items-center justify-center gap-x-5 gap-y-5">
+              <button
+                onClick={() => setShowModal(true)}
+                className="mt-5 rounded-md bg-green-500 px-5 py-3 text-2xl capitalize text-white lg:mt-0"
+              >
+                checkout
+              </button>
+
+              <button
+                className="mt-5 rounded-md bg-red-500 px-5 py-3 text-[19px] lg:text-2xl capitalize text-white lg:mt-0"
+                onClick={() => dispatch(clearCart())}
+              >
+                clear cart: {carts.length}
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
