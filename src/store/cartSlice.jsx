@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  loading: '',
+  loading: true,
   products: [],
   carts: [],
 };
@@ -11,24 +11,41 @@ const initialState = {
 export const fetchAllProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const res = await axios.get("http://api.escuelajs.co/api/v1/products");
-    return res.data;
+    const response = await axios.get("http://fakestoreapi.com/products");
+    return response.data;
   }
 );
 
 const cartSlice = createSlice({
-  name: "products/allproducts",
+  name: "items",
   initialState,
-  reducers: {},
+  reducers: {
+    // add to cart
+    AddToCart: (state, action) => {
+      const cartItem = state.products.find((item) => {
+        return item.id === action.payload;
+      });
+      state.carts = [...state.carts, cartItem];
+    },
 
+    // remove from cart
+    RemoveFromCart: (state, action) => {
+      const DeleteItems = state.carts.filter((item) => {
+        return item.id !== action.payload;
+      });
+      state.carts = DeleteItems;
+    },
 
-  extraReducer: {
+  },
+
+  extraReducers: {
     [fetchAllProducts.fulfilled]: (state, action) => {
+      state.loading = false;
       state.products = action.payload;
     },
   },
 });
 
-// export const {} = cartSlice.actions;
+export const { AddToCart, RemoveFromCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
